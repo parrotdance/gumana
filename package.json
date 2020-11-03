@@ -1,6 +1,6 @@
 {
   "name": "gumana",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Git user manager.",
   "main": "./bin/index.js",
   "bin": "./bin/index.js",
@@ -15,6 +15,8 @@
   "author": "ParroT",
   "license": "MIT",
   "dependencies": {
-    "fs-extra": "^9.0.1"
+    "chalk": "^4.1.0",
+    "fs-extra": "^9.0.1",
+    "yargs": "^16.1.0"
   }
 }
