@@ -1,0 +1,20 @@
+{
+  "name": "gumana",
+  "version": "1.0.0",
+  "description": "Git user manager.",
+  "main": "./bin/index.js",
+  "bin": "./bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "git",
+    "user",
+    "manager"
+  ],
+  "author": "ParroT",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^9.0.1"
+  }
+}
