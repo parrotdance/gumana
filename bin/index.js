@@ -1,4 +1,6 @@
 #!/usr/bin/env node
-const reader = require('./reader')
 
-console.log('welcome to gumana')
+;(async function run() {
+  await require('./init')()
+  require('./worker')()
+})()
