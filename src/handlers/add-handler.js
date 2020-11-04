@@ -10,5 +10,6 @@ module.exports = async function addHandler() {
     await question('Please input email: ', writeEmail)
     const newUserInfo = formatUserInfo(name, email)
     addUser(newUserInfo)
+    console.log(`Add preset success: ${newUserInfo}`)
   }
 }

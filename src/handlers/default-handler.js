@@ -14,7 +14,7 @@ module.exports = async function defaultHandler() {
   await question(questionStr, (string) => {
     const index = Number(string)
     if (Number.isNaN(index)) {
-      console.log(`Invalid input. Please input number.`)
+      console.log(`Invalid input. Please input a number.`)
     } else {
       const targetUser = PRESETS[index - 1]
       if (targetUser) {
