@@ -2,9 +2,34 @@ const fs = require('fs-extra')
 const { resolve } = require('path')
 const homedir = require('os').homedir()
 
-const formatUserInfo = (name, email) => `${name} <${email}>\n`
+const GIT_CFG_PATH = resolve(homedir, '.gitconfig')
+const SELF_CFG_PATH = resolve(homedir, '.gumanacfg')
+const CURRENT_USER = readUser(GIT_CFG_PATH)
+const VERSION = require('../package.json').version
 
-const readUser = (path) => {
+function formatUserInfo(name, email) {
+  return `${name} <${email}>`
+}
+
+function addUser(newUserInfo) {
+  const presets = fs
+    .readFileSync(SELF_CFG_PATH, 'utf-8')
+    .split('\n')
+    .filter((v) => v)
+    .map((v) => v.trim())
+  const trimedUserInfo = newUserInfo.trim()
+  if (presets.includes(trimedUserInfo)) {
+    console.log(
+      `Exist userinfo: ${newUserInfo}, just run 'gumana' to select a new identify.`
+    )
+  } else {
+    presets.push(trimedUserInfo)
+    fs.writeFileSync(SELF_CFG_PATH, presets.join('\n') + '\n')
+    console.log(`Add user info successful: ${newUserInfo}\n`)
+  }
+}
+
+function readUser(path) {
   const gitConfig = fs.readFileSync(path, 'utf-8')
   const length = gitConfig.length
   let p1 = gitConfig.indexOf('[user]')
@@ -20,7 +45,7 @@ const readUser = (path) => {
   const [userLine, emailLine] = userSection.split('\n').filter((v) => v)
   const name = userLine.split('=')[1].trim()
   const email = emailLine.split('=')[1].trim()
-  return { name, email, fmt: formatUserInfo(name, email) }
+  return { name, email }
 }
 
 const readline = require('readline').createInterface({
@@ -36,16 +61,12 @@ const question = (quest, callback) => {
   })
 }
 
-const GIT_CFG_PATH = resolve(homedir, '.gitconfig')
-const SELF_CFG_PATH = resolve(homedir, '.gumanacfg')
-const CURRENT_USER = readUser(GIT_CFG_PATH)
-const VERSION = require('../package.json').version
-
 module.exports = {
   GIT_CFG_PATH,
   SELF_CFG_PATH,
   CURRENT_USER,
   VERSION,
   question,
-  formatUserInfo
+  formatUserInfo,
+  addUser
 }

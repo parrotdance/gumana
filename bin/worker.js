@@ -1,13 +1,13 @@
-const options = require('./options')
-
 module.exports = async function work() {
   const arg = process._cfg.argv
-  options.forEach((option) => {
-    const { flag, fullFlag, handler } = option
-    if (arg[flag] || arg[fullFlag]) {
-      if (handler) await handler()
-      process.exit(0) // only execute first matched handler
-    }
-  })
-  console.log(arg)
+  if (Object.keys(arg).length === 2) {
+    // without any flag
+  } else {
+    const options = require('./options')
+    const option = options.find(
+      (option) => arg[option.flag] || arg[option.fullFlag]
+    )
+    option.handler && (await option.handler())
+  }
+  process.exit(0)
 }
