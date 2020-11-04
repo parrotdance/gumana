@@ -1,6 +1,13 @@
 const fs = require('fs-extra')
 const { execSync } = require('child_process')
-const { SELF_CFG_PATH, CURRENT_USER, VERSION, question } = require('./utils')
+const {
+  SELF_CFG_PATH,
+  CURRENT_USER,
+  VERSION,
+  question,
+  formatUserInfo,
+  addUser
+} = require('./utils')
 const options = require('./options')
 
 const gitExist = () => {
@@ -32,7 +39,9 @@ module.exports = async function init() {
     // First time run gumana
     await question(welcome, (opt) => {
       if (opt === 'y') {
-        fs.writeFileSync(SELF_CFG_PATH, CURRENT_USER.fmt)
+        fs.writeFileSync(SELF_CFG_PATH, '')
+        const userInfo = formatUserInfo(CURRENT_USER.name, CURRENT_USER.email)
+        addUser(userInfo)
       } else if (opt === 'n') {
         console.log('Negative. Process exit.')
         process.exit(-1)
