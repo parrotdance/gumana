@@ -7,7 +7,7 @@ const {
   question,
   formatUserInfo,
   addUser
-} = require('./utils')
+} = require('../src/utils')
 const options = require('./options')
 
 const gitExist = () => {

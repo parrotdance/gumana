@@ -1,5 +1,5 @@
 const fs = require('fs-extra')
-const { SELF_CFG_PATH, question, formatUserInfo, addUser } = require('./utils')
+const { SELF_CFG_PATH, question, formatUserInfo, addUser } = require('../utils')
 
 module.exports = async function addHandler() {
   if (fs.existsSync(SELF_CFG_PATH)) {
