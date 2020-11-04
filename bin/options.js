@@ -3,26 +3,27 @@ module.exports = [
     flag: 'a',
     fullFlag: 'add',
     desc: 'Add git user info',
-    handler: require('./add-handler')
+    handler: require('../src/handlers/add-handler')
   },
   {
     flag: 'c',
     fullFlag: 'current',
-    desc: 'Show current git user info'
+    desc: '(WIP) Show current git user info'
   },
   {
     flag: 'l',
     fullFlag: 'list',
-    desc: 'List all stored user info'
+    desc: 'List all stored user info',
+    handler: require('../src/handlers/list-handler')
   },
   {
     flag: 'd',
     fullFlag: 'delete',
-    desc: 'Delete git user info'
+    desc: '(WIP) Delete git user info'
   },
   {
     flag: 'r',
     fullFlag: 'reset',
-    desc: 'Reset git user manager'
+    desc: '(WIP) Reset git user manager'
   }
 ]
