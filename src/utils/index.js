@@ -6,6 +6,7 @@ const GIT_CFG_PATH = resolve(homedir, '.gitconfig')
 const SELF_CFG_PATH = resolve(homedir, '.gumanacfg')
 const CURRENT_USER = readUser(GIT_CFG_PATH)
 const VERSION = require('../../package.json').version
+fs.ensureFileSync(SELF_CFG_PATH)
 const PRESETS = fs
   .readFileSync(SELF_CFG_PATH, 'utf-8')
   .split('\n')
@@ -35,7 +36,6 @@ function addUser(newUserInfo) {
   } else {
     presets.push(trimedUserInfo)
     fs.writeFileSync(SELF_CFG_PATH, presets.join('\n') + '\n')
-    console.log(`Add user info successful: ${newUserInfo}\n`)
   }
 }
 

@@ -14,7 +14,7 @@ const gitExist = () => {
   const version = execSync('git --version')
   return version.includes('git version')
 }
-const checkCfg = () => fs.existsSync(SELF_CFG_PATH)
+const checkCfg = () => fs.statSync(SELF_CFG_PATH).size > 0
 const welcome = `
 Thanks for using gumana.
 But we can not find .guconfig at: ${SELF_CFG_PATH}
@@ -42,7 +42,13 @@ module.exports = async function init() {
         fs.writeFileSync(SELF_CFG_PATH, '')
         const userInfo = formatUserInfo(CURRENT_USER.name, CURRENT_USER.email)
         addUser(userInfo)
+        console.log(`Current user info has been stored: ${userInfo}`)
+        console.log(`\nNext:\n`)
+        console.log(`  Please run 'gumana -a' to add a new git user preset.`)
+        console.log(`  Then, run 'gumana' again to switch git user.`)
+        process.exit(0)
       } else if (opt === 'n') {
+        fs.removeSync(SELF_CFG_PATH)
         console.log('Negative. Process exit.')
         process.exit(-1)
       }
