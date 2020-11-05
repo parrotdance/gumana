@@ -6,9 +6,9 @@ const {
   VERSION,
   question,
   formatUserInfo,
-  addUser
+  addUserPreset
 } = require('../src/utils')
-const options = require('./options')
+const options = require('../src/entries')
 
 const gitExist = () => {
   const version = execSync('git --version')
@@ -41,7 +41,7 @@ module.exports = async function init() {
       if (opt === 'y') {
         fs.writeFileSync(SELF_CFG_PATH, '')
         const userInfo = formatUserInfo(CURRENT_USER.name, CURRENT_USER.email)
-        addUser(userInfo)
+        addUserPreset(userInfo)
         console.log(`Current user info has been stored: ${userInfo}`)
         console.log(`\nNext:\n`)
         console.log(`  Please run 'gumana -a' to add a new git user preset.`)

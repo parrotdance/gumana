@@ -22,19 +22,14 @@ function parseUserInfo(userinfo) {
   return { name, email }
 }
 
-function addUser(newUserInfo) {
-  const presets = fs
-    .readFileSync(SELF_CFG_PATH, 'utf-8')
-    .split('\n')
-    .filter((v) => v)
-    .map((v) => v.trim())
+function addUserPreset(newUserInfo) {
   const trimedUserInfo = newUserInfo.trim()
-  if (presets.includes(trimedUserInfo)) {
+  if (PRESETS.includes(trimedUserInfo)) {
     console.log(
       `Exist userinfo: ${newUserInfo}, just run 'gumana' to select a new identify.`
     )
   } else {
-    presets.push(trimedUserInfo)
+    PRESETS.push(trimedUserInfo)
     fs.writeFileSync(SELF_CFG_PATH, presets.join('\n') + '\n')
   }
 }
@@ -86,6 +81,6 @@ module.exports = {
   question,
   formatUserInfo,
   parseUserInfo,
-  addUser,
+  addUserPreset,
   getUserSectionPos
 }

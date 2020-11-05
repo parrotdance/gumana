@@ -6,7 +6,7 @@ module.exports = async function work() {
     // without any flag
     await defaultHandler()
   } else {
-    const options = require('./options')
+    const options = require('../src/entries')
     const option = options.find(
       (option) => arg[option.flag] || arg[option.fullFlag]
     )
