@@ -1,14 +1,21 @@
 const {
-  PRESETS,
+  getPresets,
+  getCurrentUser,
   question,
   getUserSectionPos,
   parseUserInfo,
-  GIT_CFG_PATH
+  GIT_CFG_PATH,
+  formatUserInfo
 } = require('../utils')
 const fs = require('fs-extra')
 
 module.exports = async function defaultHandler() {
-  const list = PRESETS.map((s, i) => `${i + 1}) ${s}`) // plus 1 for user experience
+  const presets = getPresets()
+  const { name, email } = getCurrentUser()
+  const currentUser = formatUserInfo(name, email)
+  const list = presets.map((s, i) =>
+    s === currentUser ? `${i + 1}) ${s} (current)` : `${i + 1}) ${s}`
+  ) // plus 1 for user experience
   const listStr = list.join('\n')
   const questionStr = `Stored git user presets: \n${listStr}\n\nPlease select user by index of preset (e.g. 1): `
   await question(questionStr, (string) => {
@@ -16,7 +23,7 @@ module.exports = async function defaultHandler() {
     if (Number.isNaN(index)) {
       console.log(`Invalid input. Please input a number.`)
     } else {
-      const targetUser = PRESETS[index - 1]
+      const targetUser = presets[index - 1]
       if (targetUser) {
         const gitConfig = fs.readFileSync(GIT_CFG_PATH, 'utf-8')
         const { titleStart, end } = getUserSectionPos(gitConfig)

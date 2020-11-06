@@ -1,6 +1,6 @@
-const { CURRENT_USER, formatUserInfo } = require('../utils')
+const { getCurrentUser, formatUserInfo } = require('../utils')
 
 module.exports = async function currentHandler() {
-  const user = formatUserInfo(CURRENT_USER.name, CURRENT_USER.email)
-  console.log(`Current git user: ${user}`)
+  const { name, email } = getCurrentUser()
+  console.log(`Current git user: ${formatUserInfo(name, email)}`)
 }

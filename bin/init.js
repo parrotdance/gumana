@@ -2,8 +2,8 @@ const fs = require('fs-extra')
 const { execSync } = require('child_process')
 const {
   SELF_CFG_PATH,
-  CURRENT_USER,
   VERSION,
+  getCurrentUser,
   question,
   formatUserInfo,
   addUserPreset
@@ -40,7 +40,8 @@ module.exports = async function init() {
     await question(welcome, (opt) => {
       if (opt === 'y') {
         fs.writeFileSync(SELF_CFG_PATH, '')
-        const userInfo = formatUserInfo(CURRENT_USER.name, CURRENT_USER.email)
+        const { name, email } = getCurrentUser()
+        const userInfo = formatUserInfo(name, email)
         addUserPreset(userInfo)
         console.log(`Current user info has been stored: ${userInfo}`)
         console.log(`\nNext:\n`)

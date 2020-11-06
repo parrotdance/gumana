@@ -1,5 +1,6 @@
-const { PRESETS } = require('../utils')
+const { getPresets } = require('../utils')
 
 module.exports = async function listHandler() {
-  console.log(PRESETS.join('\n'))
+  const presets = getPresets()
+  console.log(presets.join('\n'))
 }
