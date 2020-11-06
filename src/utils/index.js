@@ -4,14 +4,9 @@ const homedir = require('os').homedir()
 
 const GIT_CFG_PATH = resolve(homedir, '.gitconfig')
 const SELF_CFG_PATH = resolve(homedir, '.gumanacfg')
-const CURRENT_USER = readUser(GIT_CFG_PATH)
 const VERSION = require('../../package.json').version
 fs.ensureFileSync(SELF_CFG_PATH)
-const PRESETS = fs
-  .readFileSync(SELF_CFG_PATH, 'utf-8')
-  .split('\n')
-  .filter((v) => v)
-  .map((v) => v.trim())
+let PRESETS = ''
 
 function formatUserInfo(name, email) {
   return `${name} <${email}>`
@@ -49,14 +44,25 @@ function getUserSectionPos(configStr) {
   return { titleStart: title, start: p1, end: p2 }
 }
 
-function readUser(path) {
-  const gitConfig = fs.readFileSync(path, 'utf-8')
+function getCurrentUser() {
+  const gitConfig = fs.readFileSync(GIT_CFG_PATH, 'utf-8')
   const { start, end } = getUserSectionPos(gitConfig)
   const userSection = gitConfig.substring(start, end)
   const [userLine, emailLine] = userSection.split('\n').filter((v) => v)
   const name = userLine.split('=')[1].trim()
   const email = emailLine.split('=')[1].trim()
   return { name, email }
+}
+
+function getPresets() {
+  if (!PRESETS) {
+    PRESETS = fs
+      .readFileSync(SELF_CFG_PATH, 'utf-8')
+      .split('\n')
+      .filter((v) => v)
+      .map((v) => v.trim())
+  }
+  return PRESETS
 }
 
 const readline = require('readline').createInterface({
@@ -75,12 +81,12 @@ const question = (quest, callback) => {
 module.exports = {
   GIT_CFG_PATH,
   SELF_CFG_PATH,
-  CURRENT_USER,
   VERSION,
-  PRESETS,
   question,
   formatUserInfo,
   parseUserInfo,
+  getCurrentUser,
+  getPresets,
   addUserPreset,
   getUserSectionPos
 }
