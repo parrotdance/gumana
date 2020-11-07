@@ -42,3 +42,5 @@ Please select user by index of preset (e.g. 1): 1
 ...
 √ Git user has been set => parrot2 <parrot2@example.com>
 ```
+
+### For more infomation, run `gumana -h` for help.
