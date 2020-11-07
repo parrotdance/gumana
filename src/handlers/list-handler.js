@@ -1,6 +1,7 @@
-const { getPresets } = require('../utils')
+const { getPresets, logInfo } = require('../utils')
 
 module.exports = async function listHandler() {
   const presets = getPresets()
-  console.log(presets.join('\n'))
+  logInfo('Stored git user presets: ')
+  console.log(presets.map((v, i) => `${i + 1}) ${v}`).join('\n'))
 }

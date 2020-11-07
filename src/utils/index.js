@@ -1,12 +1,19 @@
 const fs = require('fs-extra')
 const { resolve } = require('path')
 const homedir = require('os').homedir()
+const ora = require('ora')()
+const log = console.log
+const logSucceed = (text) => ora.succeed(text)
+const logFail = (text) => ora.fail(text)
+const logWarn = (text) => ora.warn(text)
+const logInfo = (text) => ora.info(text)
 
 const GIT_CFG_PATH = resolve(homedir, '.gitconfig')
 const SELF_CFG_PATH = resolve(homedir, '.gumanacfg')
+const SELF_CFG_DIR = homedir
 const VERSION = require('../../package.json').version
 fs.ensureFileSync(SELF_CFG_PATH)
-let PRESETS = ''
+let PRESETS = []
 
 function formatUserInfo(name, email) {
   return `${name} <${email}>`
@@ -24,8 +31,7 @@ function addUserPreset(newUserInfo) {
       `Exist userinfo: ${newUserInfo}, just run 'gumana' to select a new identify.`
     )
   } else {
-    PRESETS.push(trimedUserInfo)
-    fs.writeFileSync(SELF_CFG_PATH, presets.join('\n') + '\n')
+    fs.appendFileSync(SELF_CFG_PATH, newUserInfo + '\n')
   }
 }
 
@@ -55,7 +61,7 @@ function getCurrentUser() {
 }
 
 function getPresets() {
-  if (!PRESETS) {
+  if (PRESETS.length === 0) {
     PRESETS = fs
       .readFileSync(SELF_CFG_PATH, 'utf-8')
       .split('\n')
@@ -81,7 +87,13 @@ const question = (quest, callback) => {
 module.exports = {
   GIT_CFG_PATH,
   SELF_CFG_PATH,
+  SELF_CFG_DIR,
   VERSION,
+  log,
+  logSucceed,
+  logFail,
+  logWarn,
+  logInfo,
   question,
   formatUserInfo,
   parseUserInfo,

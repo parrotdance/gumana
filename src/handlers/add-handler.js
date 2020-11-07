@@ -3,7 +3,8 @@ const {
   SELF_CFG_PATH,
   question,
   formatUserInfo,
-  addUserPreset
+  addUserPreset,
+  logSucceed
 } = require('../utils')
 
 module.exports = async function addHandler() {
@@ -15,6 +16,6 @@ module.exports = async function addHandler() {
     await question('Please input email: ', writeEmail)
     const newUserInfo = formatUserInfo(name, email)
     addUserPreset(newUserInfo)
-    console.log(`Add preset success: ${newUserInfo}`)
+    logSucceed(`New user has been added => ${newUserInfo}`)
   }
 }

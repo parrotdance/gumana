@@ -5,7 +5,9 @@ const {
   getUserSectionPos,
   parseUserInfo,
   GIT_CFG_PATH,
-  formatUserInfo
+  formatUserInfo,
+  logFail,
+  logSucceed
 } = require('../utils')
 const fs = require('fs-extra')
 
@@ -21,7 +23,7 @@ module.exports = async function defaultHandler() {
   await question(questionStr, (string) => {
     const index = Number(string)
     if (Number.isNaN(index)) {
-      console.log(`Invalid input. Please input a number.`)
+      logFail(`Invalid input. Please input a number.`)
     } else {
       const targetUser = presets[index - 1]
       if (targetUser) {
@@ -34,9 +36,9 @@ module.exports = async function defaultHandler() {
           newUser +
           gitConfig.substring(end)
         fs.writeFileSync(GIT_CFG_PATH, newConfig)
-        console.log(`New user has been set: ${targetUser.trim()}`)
+        logSucceed(`Git user has been set => ${targetUser.trim()}`)
       } else {
-        console.log(`Invalid input. Please input correct index of presets.`)
+        logFail(`Invalid input. Please input correct index of presets.`)
       }
     }
   })

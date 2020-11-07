@@ -1,5 +1,11 @@
 const fs = require('fs-extra')
-const { getPresets, question, SELF_CFG_PATH } = require('../utils')
+const {
+  getPresets,
+  question,
+  SELF_CFG_PATH,
+  logFail,
+  logSucceed
+} = require('../utils')
 
 module.exports = async function deleteHandler() {
   const presets = getPresets()
@@ -8,11 +14,11 @@ module.exports = async function deleteHandler() {
   await question(questionStr, (ans) => {
     const index = Number(ans)
     if (Number.isNaN(index)) {
-      console.log(`Invalid input. Please input a number.`)
+      logFail(`Invalid input. Please input a number.`)
     } else {
       const deletedPreset = presets.splice(index - 1, 1)[0]
       const newPresets = presets.join('\n')
-      console.log(`Delete git user preset: ${deletedPreset}`)
+      logSucceed(`Git user preset has been deleted => ${deletedPreset}`)
       fs.writeFileSync(SELF_CFG_PATH, newPresets)
     }
   })
