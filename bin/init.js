@@ -18,7 +18,8 @@ const gitExist = () => {
   const version = execSync('git --version')
   return version.includes('git version')
 }
-const checkCfg = () => fs.statSync(SELF_CFG_PATH).size > 0
+const checkCfg = () =>
+  fs.existsSync(SELF_CFG_PATH) && fs.statSync(SELF_CFG_PATH).size > 0
 const welcome = `
 Thanks for using gumana.
 We use config file at: ${SELF_CFG_DIR}, but we can not find it.

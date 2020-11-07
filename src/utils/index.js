@@ -12,7 +12,6 @@ const GIT_CFG_PATH = resolve(homedir, '.gitconfig')
 const SELF_CFG_PATH = resolve(homedir, '.gumanacfg')
 const SELF_CFG_DIR = homedir
 const VERSION = require('../../package.json').version
-fs.ensureFileSync(SELF_CFG_PATH)
 let PRESETS = []
 
 function formatUserInfo(name, email) {
