@@ -17,8 +17,8 @@
   "author": "ParroT",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^4.1.0",
     "fs-extra": "^9.0.1",
+    "ora": "^5.1.0",
     "yargs": "^16.1.0"
   }
 }
