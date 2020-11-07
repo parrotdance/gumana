@@ -53,6 +53,7 @@ module.exports = async function init() {
         log(`\nNext:\n`)
         log(`  Please run 'gumana -a' to add a new git user preset.`)
         log(`  Then, run 'gumana' again to switch git user.`)
+        log(`  For more infomation, run 'gumana -h'`)
         process.exit(0)
       } else if (opt === 'n') {
         fs.removeSync(SELF_CFG_PATH)
