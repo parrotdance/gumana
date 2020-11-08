@@ -9,7 +9,7 @@ const logWarn = (text) => ora.warn(text)
 const logInfo = (text) => ora.info(text)
 
 const GIT_CFG_PATH = resolve(homedir, '.gitconfig')
-const SELF_CFG_PATH = resolve(homedir, '.gumanacfg')
+const SELF_CFG_PATH = resolve(__dirname, '../../temp/.gumanacfg')
 const SELF_CFG_DIR = homedir
 const VERSION = require('../../package.json').version
 let PRESETS = []
@@ -23,14 +23,14 @@ function parseUserInfo(userinfo) {
   return { name, email }
 }
 
-function addUserPreset(newUserInfo) {
-  const trimedUserInfo = newUserInfo.trim()
+function addUserPreset(preset) {
+  const trimedUserInfo = preset.trim()
   if (PRESETS.includes(trimedUserInfo)) {
     console.log(
-      `Exist userinfo: ${newUserInfo}, just run 'gumana' to select a new identify.`
+      `Exist userinfo: ${preset}, just run 'gumana' to select a new identify.`
     )
   } else {
-    fs.appendFileSync(SELF_CFG_PATH, newUserInfo + '\n')
+    fs.appendFileSync(SELF_CFG_PATH, preset + '\n')
   }
 }
 

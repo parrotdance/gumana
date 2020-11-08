@@ -20,10 +20,11 @@ const gitExist = () => {
 }
 const checkCfg = () =>
   fs.existsSync(SELF_CFG_PATH) && fs.statSync(SELF_CFG_PATH).size > 0
-const welcome = `
-Thanks for using gumana.
-We use config file at: ${SELF_CFG_DIR}, but we can not find it.
-Would you like to create this config file automaticly? (y/n) `
+const welcome = (user) => `
+It seems like this is the first time you run 'gumana'.
+Your current git user is => ${user}
+Please run 'gumana -a' to add another user preset,
+then run 'gumana' again to select between them`
 
 module.exports = async function init() {
   const cfg = require('yargs')(process.argv.slice(2))
@@ -42,24 +43,10 @@ module.exports = async function init() {
   }
   if (!checkCfg()) {
     // First time run gumana
-    await question(welcome, (opt) => {
-      if (opt === 'y') {
-        fs.writeFileSync(SELF_CFG_PATH, '')
-        const { name, email } = getCurrentUser()
-        const userInfo = formatUserInfo(name, email)
-        addUserPreset(userInfo)
-        log('...\n')
-        logSucceed(`Done. Now gumana is ready to go.`)
-        log(`\nNext:\n`)
-        log(`  Please run 'gumana -a' to add a new git user preset.`)
-        log(`  Then, run 'gumana' again to switch git user.`)
-        log(`  For more infomation, run 'gumana -h'`)
-        process.exit(0)
-      } else if (opt === 'n') {
-        fs.removeSync(SELF_CFG_PATH)
-        logWarn('Negative. Process exit.')
-        process.exit(-1)
-      }
-    })
+    const { name, email } = getCurrentUser()
+    const preset = formatUserInfo(name, email)
+    addUserPreset(preset)
+    console.log(welcome(preset))
+    process.exit(0)
   }
 }

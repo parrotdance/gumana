@@ -37,7 +37,6 @@ module.exports = async function defaultHandler() {
           newUser +
           gitConfig.substring(end)
         fs.writeFileSync(GIT_CFG_PATH, newConfig)
-        log('...\n')
         logSucceed(`Git user has been set => ${targetUser.trim()}`)
       } else {
         logFail(`Invalid input. Please input correct index of presets.`)
