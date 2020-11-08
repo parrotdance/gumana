@@ -2,13 +2,13 @@ module.exports = [
   {
     flag: 'a',
     fullFlag: 'add',
-    desc: 'Add git user info',
+    desc: 'Add git user preset',
     handler: require('./handlers/add-handler')
   },
   {
     flag: 'c',
     fullFlag: 'current',
-    desc: 'Show current git user info',
+    desc: 'Show current git user preset',
     handler: require('./handlers/current-handler')
   },
   {
@@ -26,7 +26,7 @@ module.exports = [
   {
     flag: 'r',
     fullFlag: 'reset',
-    desc: 'Reset git user manager',
+    desc: 'Reset gumana',
     handler: require('./handlers/reset-handler')
   }
 ]

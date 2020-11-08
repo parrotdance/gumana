@@ -10,19 +10,14 @@ npm i -g gumana
 
 # Usage
 
-```bash
+```
 $ gumana
-Thanks for using gumana.
-We use config file at: ~, but we can not find it.
-Would you like to create this config file automaticly? (y/n) y
-...
-√ Done. Now gumana is ready to go.
+It seems like this is the first time you run 'gumana'.
+Your current git user is => Jim <jim@xmind.net>
+Please run 'gumana -a' to add another user preset,
+then run 'gumana' again to select between them.
 
-Next:
-
-  Please run 'gumana -a' to add a new git user preset.
-  Then, run 'gumana' again to switch git user.
-  For more infomation, run 'gumana -h'
+Or run 'gumana -h' to check available options.
 ```
 
 ```

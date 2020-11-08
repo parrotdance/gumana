@@ -2,15 +2,12 @@ const fs = require('fs-extra')
 const { execSync } = require('child_process')
 const {
   SELF_CFG_PATH,
-  SELF_CFG_DIR,
   VERSION,
   getCurrentUser,
-  question,
   formatUserInfo,
   addUserPreset,
-  logSucceed,
-  log,
-  logWarn
+  logWarn,
+  log
 } = require('../src/utils')
 const options = require('../src/entries')
 
@@ -20,11 +17,14 @@ const gitExist = () => {
 }
 const checkCfg = () =>
   fs.existsSync(SELF_CFG_PATH) && fs.statSync(SELF_CFG_PATH).size > 0
-const welcome = (user) => `
-It seems like this is the first time you run 'gumana'.
+const welcome = (
+  user
+) => `It seems like this is the first time you run 'gumana'.
 Your current git user is => ${user}
 Please run 'gumana -a' to add another user preset,
-then run 'gumana' again to select between them`
+then run 'gumana' again to select between them.
+
+Or run 'gumana -h' to check available options.`
 
 module.exports = async function init() {
   const cfg = require('yargs')(process.argv.slice(2))
@@ -36,7 +36,7 @@ module.exports = async function init() {
   process._cfg = cfg
 
   if (!gitExist()) {
-    console.warn(
+    logWarn(
       'It seems git is not installed in this machine, please check it out before using gumana'
     )
     process.exit(-1)
@@ -46,7 +46,7 @@ module.exports = async function init() {
     const { name, email } = getCurrentUser()
     const preset = formatUserInfo(name, email)
     addUserPreset(preset)
-    console.log(welcome(preset))
+    log(welcome(preset))
     process.exit(0)
   }
 }

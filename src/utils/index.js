@@ -26,7 +26,7 @@ function parseUserInfo(userinfo) {
 function addUserPreset(preset) {
   const trimedUserInfo = preset.trim()
   if (PRESETS.includes(trimedUserInfo)) {
-    console.log(
+    logWarn(
       `Exist userinfo: ${preset}, just run 'gumana' to select a new identify.`
     )
   } else {
