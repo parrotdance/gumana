@@ -13,7 +13,7 @@ npm i -g gumana
 ```
 $ gumana
 It seems like this is the first time you run 'gumana'.
-Your current git user is => Jim <jim@xmind.net>
+Your current git user is => parrot <parrot@example.com>
 Please run 'gumana -a' to add another user preset,
 then run 'gumana' again to select between them.
 
