@@ -30,6 +30,7 @@ function addUserPreset(preset) {
       `Exist userinfo: ${preset}, just run 'gumana' to select a new identify.`
     )
   } else {
+    fs.ensureFileSync(SELF_CFG_PATH)
     fs.appendFileSync(SELF_CFG_PATH, preset + '\n')
   }
 }
