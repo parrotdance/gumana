@@ -36,7 +36,7 @@ module.exports = async function defaultHandler() {
           const gitConfig = fs.readFileSync(GIT_CFG_PATH, 'utf-8')
           const { titleStart, end } = getUserSectionPos(gitConfig)
           const { name, email } = parseUserInfo(targetUser.trim())
-          const newUser = `\n[user]\n\tname = ${name}\n\temail = ${email}\n`
+          const newUser = `[user]\n\tname = ${name}\n\temail = ${email}\n`
           const newConfig =
             gitConfig.substring(0, titleStart) +
             newUser +
