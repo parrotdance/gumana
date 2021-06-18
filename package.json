@@ -1,6 +1,6 @@
 {
   "name": "gumana",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Easy to check and switch git commit author. For multi git context user.",
   "main": "./bin/index.js",
   "bin": {
