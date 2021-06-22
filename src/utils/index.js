@@ -57,7 +57,7 @@ function getCurrentUser() {
   const userSection = gitConfig.substring(start, end)
   const [userLine, emailLine] = userSection.split('\n').filter((v) => v)
   const name = userLine.split('=')[1].trim()
-  const email = emailLine.split('=')[1].trim()
+  const email = emailLine.split('=')[1].trim().replace('<', '').replace('>', '')
   return { name, email }
 }
 
