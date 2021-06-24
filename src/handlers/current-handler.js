@@ -1,4 +1,5 @@
-const { getCurrentUser, formatUserInfo, logInfo } = require('../utils')
+const { getCurrentUser, formatUserInfo } = require('../utils')
+const { logInfo } = require('../utils/log')
 
 module.exports = async function currentHandler() {
   const { name, email } = getCurrentUser()

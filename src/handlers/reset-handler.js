@@ -1,5 +1,6 @@
 const fs = require('fs-extra')
-const { question, SELF_CFG_PATH, logWarn, logSucceed } = require('../utils')
+const { question, SELF_CFG_PATH } = require('../utils')
+const { logWarn, logSucceed } = require('../utils/log')
 
 module.exports = async function resetHandler() {
   const exist = fs.existsSync(SELF_CFG_PATH)

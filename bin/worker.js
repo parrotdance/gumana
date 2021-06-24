@@ -1,5 +1,5 @@
 const defaultHandler = require('../src/handlers/default-handler')
-const { logFail } = require('../src/utils')
+const { logFail } = require('../src/utils/log')
 
 module.exports = async function work() {
   const arg = process._cfg.argv
@@ -8,9 +8,7 @@ module.exports = async function work() {
     await defaultHandler()
   } else {
     const options = require('../src/entries')
-    const option = options.find(
-      (option) => arg[option.flag] || arg[option.fullFlag]
-    )
+    const option = options.find(option => arg[option.flag] || arg[option.fullFlag])
     if (option) {
       option.handler && (await option.handler())
     } else {
@@ -18,9 +16,8 @@ module.exports = async function work() {
         .filter((k) => k !== '_' && k !== '$0')
         .map((k) => (k.length > 1 ? `--${k}` : `-${k}`))
         .join(', ')
-      logFail(
-        `Undefined option: ${restFlag}\n\nPlease run 'gumana -h' to check available options.`
-      )
+
+      logFail(`Undefined option: ${restFlag}\n\nPlease run 'gumana -h' to check available options.`)
     }
   }
   process.exit(0)

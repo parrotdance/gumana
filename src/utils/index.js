@@ -1,42 +1,33 @@
 const fs = require('fs-extra')
 const { resolve } = require('path')
 const homedir = require('os').homedir()
-const ora = require('ora')()
-const log = console.log
-const logSucceed = (text) => ora.succeed(text)
-const logFail = (text) => ora.fail(text)
-const logWarn = (text) => ora.warn(text)
-const logInfo = (text) => ora.info(text)
+const { logWarn } = require('./log')
 
 const GIT_CFG_PATH = resolve(homedir, '.gitconfig')
 const SELF_CFG_PATH = resolve(__dirname, '../../temp/.gumanacfg')
 const SELF_CFG_DIR = homedir
 const VERSION = require('../../package.json').version
+
 let PRESETS = []
 
-function formatUserInfo(name, email) {
-  return `${name} <${email}>`
-}
-function parseUserInfo(userinfo) {
+const formatUserInfo = (name, email) => `${name} <${email}>`
+const parseUserInfo = (userinfo) => {
   const infoParts = userinfo.split(' ')
   const email = infoParts.pop().replace('<', '').replace('>', '')
   const name = infoParts.join(' ')
   return { name, email }
 }
 
-function addUserPreset(preset) {
-  const trimedUserInfo = preset.trim()
-  if (PRESETS.includes(trimedUserInfo)) {
-    logWarn(
-      `Exist userinfo: ${preset}, just run 'gumana' to select a new identify.`
-    )
+const addUserPreset = preset => {
+  if (PRESETS.includes(preset.trim())) {
+    logWarn(`Exist userinfo: ${preset}, just run 'gumana' to select a new identify.`)
   } else {
     fs.ensureFileSync(SELF_CFG_PATH)
     fs.appendFileSync(SELF_CFG_PATH, preset + '\n')
   }
 }
 
-function getUserSectionPos(configStr) {
+const getUserSectionPos = configStr => {
   const length = configStr.length
   let title = configStr.indexOf('[user]')
   let p1 = title
@@ -51,7 +42,7 @@ function getUserSectionPos(configStr) {
   return { titleStart: title, start: p1, end: p2 }
 }
 
-function getCurrentUser() {
+const getCurrentUser = () => {
   const gitConfig = fs.readFileSync(GIT_CFG_PATH, 'utf-8')
   const { start, end } = getUserSectionPos(gitConfig)
   const userSection = gitConfig.substring(start, end)
@@ -61,16 +52,16 @@ function getCurrentUser() {
   return { name, email }
 }
 
-function getPresets() {
-  if (PRESETS.length === 0) {
-    PRESETS = fs
-      .readFileSync(SELF_CFG_PATH, 'utf-8')
-      .split('\n')
-      .filter((v) => v)
-      .map((v) => v.trim())
-  }
+const initPresets = () => {
+  PRESETS = fs
+    .readFileSync(SELF_CFG_PATH, 'utf-8')
+    .split('\n')
+    .filter((v) => v)
+    .map((v) => v.trim())
   return PRESETS
 }
+
+const getPresets = () => PRESETS.length === 0 ? initPresets() : PRESETS
 
 const readline = require('readline').createInterface({
   input: process.stdin,
@@ -90,11 +81,6 @@ module.exports = {
   SELF_CFG_PATH,
   SELF_CFG_DIR,
   VERSION,
-  log,
-  logSucceed,
-  logFail,
-  logWarn,
-  logInfo,
   question,
   formatUserInfo,
   parseUserInfo,

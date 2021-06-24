@@ -3,9 +3,9 @@ const {
   SELF_CFG_PATH,
   question,
   formatUserInfo,
-  addUserPreset,
-  logSucceed
+  addUserPreset
 } = require('../utils')
+const { logSucceed } = require('../utils/log')
 
 module.exports = async function addHandler() {
   if (fs.existsSync(SELF_CFG_PATH)) {

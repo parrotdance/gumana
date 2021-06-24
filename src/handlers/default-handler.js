@@ -6,10 +6,8 @@ const {
   parseUserInfo,
   GIT_CFG_PATH,
   formatUserInfo,
-  logFail,
-  logSucceed,
-  logWarn
 } = require('../utils')
+const { logFail, logSucceed, logWarn } = require('../utils/log')
 const fs = require('fs-extra')
 
 module.exports = async function defaultHandler() {

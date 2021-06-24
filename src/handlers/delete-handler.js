@@ -2,10 +2,9 @@ const fs = require('fs-extra')
 const {
   getPresets,
   question,
-  SELF_CFG_PATH,
-  logFail,
-  logSucceed
+  SELF_CFG_PATH
 } = require('../utils')
+const { logFail, logSucceed } = require('../utils/log')
 
 module.exports = async function deleteHandler() {
   const presets = getPresets()
