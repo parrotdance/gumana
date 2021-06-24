@@ -19,7 +19,7 @@ function formatUserInfo(name, email) {
 }
 function parseUserInfo(userinfo) {
   const infoParts = userinfo.split(' ')
-  const email = infoParts.pop()
+  const email = infoParts.pop().replace('<', '').replace('>', '')
   const name = infoParts.join(' ')
   return { name, email }
 }
